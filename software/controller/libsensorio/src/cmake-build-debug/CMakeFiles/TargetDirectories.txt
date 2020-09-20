@@ -1,0 +1,3 @@
+/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/cmake-build-debug/CMakeFiles/src.dir
