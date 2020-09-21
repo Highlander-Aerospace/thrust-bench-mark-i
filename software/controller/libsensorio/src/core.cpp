@@ -6,40 +6,16 @@
 #include <cstring>
 #include <chrono>
 #include <vector>
-#include <fcntl.h>
-#include <termios.h>
 #include <thread>
 
 #include "numpy/arrayobject.h"
+#include "arduino-serial-lib.c"
 
-
-int DEV_FD;
-fd_set DEV_FDS;
-FILE* DEV_FILE;
+int SERIAL_PORT;
 std::vector<std::pair<float, float>> DATA;
-struct timeval TIMEOUT = { 10, 0 }; // 10 Seconds
-const speed_t DEV_BAUD = B115200;
+const int DEV_BAUD = 9600;
 bool RECORDING;
 std::thread RECORDING_THREAD;
-
-
-int await_from_serial() {
-    return select(DEV_FD+1, &DEV_FDS, NULL, NULL, &TIMEOUT);
-}
-
-void send_to_serial(const char* msg) {
-    fputs(msg, DEV_FILE);
-}
-
-void read_from_serial(char* dest, int len) {
-    fgets(dest, len, DEV_FILE);
-}
-
-float read_float_from_serial() {
-    float r;
-    fscanf(DEV_FILE, "%f\n", &r);
-    return r;
-}
 
 static PyObject* connect(PyObject* self, PyObject* args, PyObject* kwargs) {
     char* device;
@@ -48,42 +24,47 @@ static PyObject* connect(PyObject* self, PyObject* args, PyObject* kwargs) {
         return NULL;
     }
 
-    // dwbi
-    DEV_FD = open(device, O_RDWR | O_NOCTTY | O_NDELAY);
-    DEV_FILE = fdopen(DEV_FD, "rw");
-    FD_ZERO(&DEV_FDS);
-    FD_SET(DEV_FD, &DEV_FDS);
-    struct termios settings;
-    tcgetattr(DEV_FD, &settings);
-    cfsetospeed(&settings, DEV_BAUD);
-    settings.c_oflag &= ~OPOST;
-    tcsetattr(DEV_FD, TCSANOW, &settings);
-    tcflush(DEV_FD, TCOFLUSH);
-
-    send_to_serial("I/O TEST FROM MASTER\n");
+    SERIAL_PORT = serialport_init(device, DEV_BAUD);
+    serialport_flush(SERIAL_PORT);
+    int r = serialport_write(SERIAL_PORT, "I/O TEST FROM MASTER\n");
     PyObject* pyret;
-    switch (await_from_serial()) {
+    if (r == -1) {
+        std::string msg = "Could not write to device: "+std::string(device);
+        pyret = Py_BuildValue("s", msg.c_str());
+        return pyret;
+    }
+
+
+    std::string recvstr(100, ' ');
+    switch (serialport_read_until(SERIAL_PORT, &recvstr[0], '\n', 100, 5000)) {
         case -1: {
             pyret = Py_BuildValue("s", "Error reading from device.");
             return pyret;
         }
-        case 0: {
+        case -2: {
             pyret = Py_BuildValue("s", "Timeout reading from device.");
             return pyret;
         }
         case 1: {
-            char recvstr[30];
-            read_from_serial(recvstr, 30);
-            if (strcmp(recvstr, "I/O RESPONSE FROM HARDWARE") == 0) {
+            if (recvstr == "I/O RESPONSE FROM HARDWARE") {
                 pyret = Py_BuildValue("s", "Device successfully connected.");
             } else {
-                pyret = Py_BuildValue("s", "Not receiving proper data from device.");
+                std::string msg = "Not receiving proper data from device. Received: ";
+                msg = msg+recvstr;
+                pyret = Py_BuildValue("s", msg.c_str());
             }
             return pyret;
         }
     }
 }
 
+static PyObject* serial_close(PyObject* self, PyObject* args, PyObject* kwargs) {
+    serialport_close(SERIAL_PORT);
+    PyObject* pyret = Py_BuildValue("s", "Closed connection to device.");
+    return pyret;
+}
+
+/**
 static PyObject* tare(PyObject* self, PyObject* args, PyObject* kwargs) {
     send_to_serial("T\n");
     PyObject* pyret;
@@ -180,14 +161,15 @@ static PyObject* end(PyObject* self, PyObject* args, PyObject* kwargs) {
         }
     }
 }
-
+**/
 
 #define pyargflag METH_VARARGS | METH_KEYWORDS
 static PyMethodDef CoreMethods[] = {
         {"connect", (PyCFunction) connect, pyargflag, "Connect to hardware."},
-        {"tare", (PyCFunction) tare, pyargflag, "Tare cell."},
-        {"record", (PyCFunction) start, pyargflag, "Initialize hardware polling."},
-        {"end", (PyCFunction) end, pyargflag, "Return poll data."},
+        {"close", (PyCFunction) serial_close, pyargflag, "Close connection to hardware."},
+        //{"tare", (PyCFunction) tare, pyargflag, "Tare cell."},
+        //{"record", (PyCFunction) start, pyargflag, "Initialize hardware polling."},
+        //{"end", (PyCFunction) end, pyargflag, "Return poll data."},
         {NULL, NULL, 0, NULL}
 };
 

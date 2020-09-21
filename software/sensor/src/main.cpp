@@ -10,8 +10,7 @@ const int LOADCELL_SCK_PIN = 3;
 const float CALIBRATION_SCALE = 1; // TODO
 
 void setup() {
-    Serial.begin(115200);
-    Serial.setTimeout(30000);
+    Serial.begin(9600);
     loadcell.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
     loadcell.set_scale(CALIBRATION_SCALE);
 }
@@ -30,6 +29,8 @@ void loop() {
         } else if (msg == "T") {
             loadcell.tare();
             Serial.println("T");
+        } else {
+            Serial.println(msg);
         }
     } else {
         if (Serial.available() > 0) {
@@ -39,7 +40,8 @@ void loop() {
                 Serial.println("S");
             }
         } else {
-            Serial.println(loadcell.get_units(5));
+            //Serial.println(loadcell.get_units(5));
+            Serial.println(random(1, 10000)/100.);
         }
     }
 

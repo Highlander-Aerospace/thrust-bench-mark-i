@@ -10,13 +10,12 @@ class libsensorio_build(build_ext):
     def run(self):
         build_ext.run(self)
 
-compile_args = ['-O3', '-march=native', '-std=c++14']
-link_args = compile_args
+compile_args = ['-O3', '-march=native', '-std=c++14', '-fPIC', '-flto']
 
 core_ext = Extension('libsensorio/core',
-                   sources=['libsensorio/src/core.cpp'],
-                   extra_compile_args=compile_args,
-                   extra_link_args=link_args)
+                   sources=['libsensorio/src/core.cpp', 'libsensorio/src/include/arduino-serial-lib.c'],
+		   include_dirs=['libsensorio/src/include'],
+                   extra_compile_args=compile_args)
 
 setup(name = 'libsensorio',
       packages = ["libsensorio"],

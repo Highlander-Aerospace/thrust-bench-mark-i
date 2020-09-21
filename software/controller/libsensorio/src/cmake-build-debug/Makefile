@@ -170,6 +170,33 @@ core.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/core.cpp.s
 .PHONY : core.cpp.s
 
+include/arduino-serial-lib.o: include/arduino-serial-lib.c.o
+
+.PHONY : include/arduino-serial-lib.o
+
+# target to build an object file
+include/arduino-serial-lib.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/include/arduino-serial-lib.c.o
+.PHONY : include/arduino-serial-lib.c.o
+
+include/arduino-serial-lib.i: include/arduino-serial-lib.c.i
+
+.PHONY : include/arduino-serial-lib.i
+
+# target to preprocess a source file
+include/arduino-serial-lib.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/include/arduino-serial-lib.c.i
+.PHONY : include/arduino-serial-lib.c.i
+
+include/arduino-serial-lib.s: include/arduino-serial-lib.c.s
+
+.PHONY : include/arduino-serial-lib.s
+
+# target to generate assembly for a file
+include/arduino-serial-lib.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src.dir/build.make CMakeFiles/src.dir/include/arduino-serial-lib.c.s
+.PHONY : include/arduino-serial-lib.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -182,6 +209,9 @@ help:
 	@echo "... core.o"
 	@echo "... core.i"
 	@echo "... core.s"
+	@echo "... include/arduino-serial-lib.o"
+	@echo "... include/arduino-serial-lib.i"
+	@echo "... include/arduino-serial-lib.s"
 .PHONY : help
 
 

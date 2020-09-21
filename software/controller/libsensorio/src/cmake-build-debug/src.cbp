@@ -45,6 +45,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/include/python3.8"/>
+					<Add directory="/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -69,6 +70,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/include/python3.8"/>
+					<Add directory="/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -87,6 +89,12 @@
 			</Target>
 		</Build>
 		<Unit filename="/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/core.cpp">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include/arduino-serial-lib.c">
+			<Option target="src"/>
+		</Unit>
+		<Unit filename="/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include/arduino-serial-lib.h">
 			<Option target="src"/>
 		</Unit>
 		<Unit filename="/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/CMakeLists.txt">

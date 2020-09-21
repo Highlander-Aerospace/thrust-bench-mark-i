@@ -90,17 +90,32 @@ CMakeFiles/src.dir/core.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/src.dir/core.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/core.cpp -o CMakeFiles/src.dir/core.cpp.s
 
+CMakeFiles/src.dir/include/arduino-serial-lib.c.o: CMakeFiles/src.dir/flags.make
+CMakeFiles/src.dir/include/arduino-serial-lib.c.o: ../include/arduino-serial-lib.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/src.dir/include/arduino-serial-lib.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/include/arduino-serial-lib.c.o   -c /home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include/arduino-serial-lib.c
+
+CMakeFiles/src.dir/include/arduino-serial-lib.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/src.dir/include/arduino-serial-lib.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include/arduino-serial-lib.c > CMakeFiles/src.dir/include/arduino-serial-lib.c.i
+
+CMakeFiles/src.dir/include/arduino-serial-lib.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/src.dir/include/arduino-serial-lib.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/include/arduino-serial-lib.c -o CMakeFiles/src.dir/include/arduino-serial-lib.c.s
+
 # Object files for target src
 src_OBJECTS = \
-"CMakeFiles/src.dir/core.cpp.o"
+"CMakeFiles/src.dir/core.cpp.o" \
+"CMakeFiles/src.dir/include/arduino-serial-lib.c.o"
 
 # External object files for target src
 src_EXTERNAL_OBJECTS =
 
 libsrc.a: CMakeFiles/src.dir/core.cpp.o
+libsrc.a: CMakeFiles/src.dir/include/arduino-serial-lib.c.o
 libsrc.a: CMakeFiles/src.dir/build.make
 libsrc.a: CMakeFiles/src.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libsrc.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/biscuit/Desktop/thrust-bench-mark-i/software/controller/libsensorio/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libsrc.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/src.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/src.dir/link.txt --verbose=$(VERBOSE)
 
