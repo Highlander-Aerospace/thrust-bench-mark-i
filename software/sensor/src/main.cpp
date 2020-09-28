@@ -38,7 +38,7 @@ void loop() {
                 Serial.println("S");
             }
         } else {
-            Serial.println(loadcell.get_units(5));
+            Serial.println(loadcell.get_units(1));
         }
     }
 }
