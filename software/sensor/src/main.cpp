@@ -7,16 +7,16 @@ HX711 loadcell;
 
 const int LOADCELL_DOUT_PIN = 2;
 const int LOADCELL_SCK_PIN = 3;
-const float CALIBRATION_SCALE = 1; // TODO
+const float CALIBRATION_SCALE = -2467.8353715336484129;
+bool recording = false;
+String msg;
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
+    Serial.println("HIAERO MARK I THRUST BENCH SOFTWARE BOOTING..");
     loadcell.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
     loadcell.set_scale(CALIBRATION_SCALE);
 }
-
-bool recording = false;
-String msg;
 
 void loop() {
     if (!recording) {
@@ -29,8 +29,6 @@ void loop() {
         } else if (msg == "T") {
             loadcell.tare();
             Serial.println("T");
-        } else {
-            Serial.println(msg);
         }
     } else {
         if (Serial.available() > 0) {
@@ -40,10 +38,7 @@ void loop() {
                 Serial.println("S");
             }
         } else {
-            //Serial.println(loadcell.get_units(5));
-            Serial.println(random(1, 10000)/100.);
+            Serial.println(loadcell.get_units(5));
         }
     }
-
-    Serial.println(loadcell.read());
 }

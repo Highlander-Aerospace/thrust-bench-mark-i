@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsrc.a  CMakeFiles/src.dir/core.cpp.o CMakeFiles/src.dir/include/arduino-serial-lib.c.o
-/usr/bin/ranlib libsrc.a
